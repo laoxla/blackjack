@@ -1,0 +1,44 @@
+
+<div class="well">
+  <%= link_to "Back", root_path, class: "btn btn-success btn-lg" %>
+  <%= link_to "New", games_path(id: @game.id), class: "btn btn-success btn-lg", method: :post %>
+   <!-- <%= "does the app think the particpants are finished ? #{@game.participants_finished} "%> -->
+   <% if @game.player_hand.total <= 21 %>
+    <%= link_to "Hit", hit_game_path(id: @game.id), class: "btn btn-success btn-lg", method: :patch %>
+
+   <%= link_to "Stay", stay_game_path(id: @game.id), class: "btn btn-success btn-lg", method: :patch %>
+  <% else %>
+   <h3>
+   <%= "Player Bust" %>
+  </h3>
+ <% end %>
+ <h3>
+ <%= @game.participants_finished ? @game.winner? : '' %>
+</h3>
+</div>
+
+<div class="container">
+<div class="row">
+  <div class="dealer">
+    <h2>Dealer Hand <%= @game.dealer_hand.total %> </h2>
+
+    <!-- <h5>Dealer finished?? <%=@game.dealer_hand.is_finished %></h5> -->
+    <% @game.dealer_hand.cards.each_with_index do |card, i| %>
+    <% if i == 0 && @game.participants_finished = true && @game.dealer_hand.size == 2 %>
+      <%= image_tag "card-back.png" %>
+    <%else %>
+      <%= image_tag "#{card.name}#{card.suit}.png" %>
+    <%end%>
+    <% end %>
+  </div>
+
+
+  <div class="player">
+    <h2> Player Hand <%= @game.player_hand.total %> </h2>
+
+    <% @game.player_hand.cards.each do |card| %>
+      <%= image_tag "#{card.name}#{card.suit}.png" %>
+    <% end %>
+  </div>
+  </div>
+</div>
