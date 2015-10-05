@@ -35,27 +35,23 @@ class GamesController < ApplicationController
        @game.player_hand.cards << @game.deck.first
      end
        redirect_to game_path(id: @game.id)
-
    end
 
    def stay
       @game = Game.find params[:id]
-
-      #BOOKMARK:-----Why won't the view show player_hand.is_finished as `true`?? -------
-      @game.player_hand.is_finished = true
+      player_hand = @game.player_hand
+      player_hand.is_finished = true
       until  @game.dealer_hand.total > 21 || @game.dealer_hand.total >= 17
          @game.dealer_hand.cards << @game.deck.second
       end
-      @game.dealer_hand.is_finished = true
-
+      dealer_hand = @game.dealer_hand
+      dealer_hand.is_finished = true
       @game.participants_finished = true
-      @game.save
-
+      @game.save!
+      dealer_hand.save
+      player_hand.save
       redirect_to game_path(id: @game.id)
 
     end
-
-
-
 
 end
