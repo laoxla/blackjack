@@ -24,10 +24,14 @@
 
     <!-- <h5>Dealer finished?? <%=@game.dealer_hand.is_finished %></h5> -->
     <% @game.dealer_hand.cards.each_with_index do |card, i| %>
-    <% if i == 0 && @game.participants_finished = true && @game.dealer_hand.size == 2 %>
+    <% if i == 0 && @game.dealer_hand.size == 2 %>
       <%= image_tag "card-back.png" %>
-    <%else %>
+
+    <%elsif @game.participants_finished == true && @game.dealer_hand.size == 2 %>
       <%= image_tag "#{card.name}#{card.suit}.png" %>
+      <% else %>
+      <%= image_tag "#{card.name}#{card.suit}.png" %>
+
     <%end%>
     <% end %>
   </div>

@@ -6,7 +6,7 @@ class Game < ActiveRecord::Base
 
     def winner?
 
-      if dealer_hand.total > player_hand.total && dealer_hand.total  < 21
+      if dealer_hand.total > player_hand.total && dealer_hand.total  <= 21
            return  "Player Lose"
       elsif player_hand.total > dealer_hand.total && player_hand.total <= 21
            return "Player wins"
